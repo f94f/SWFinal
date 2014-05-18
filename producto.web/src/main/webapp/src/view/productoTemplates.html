@@ -1,0 +1,79 @@
+<script type="text/template" id="productoList">
+    <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <table class="table striped">
+    <thead>
+    <tr>
+		 <th>Nombre</th>
+		 <th>Tipo</th>
+		 <th>¿Es Perecedero?</th>
+		 <th>Precio Promedio</th>
+		 <th>Tiempo Promedio</th>
+		 <th>Cantidad Promedio</th>
+		 <th>M&iacute;nimo Nivel de Inventario</th>
+    <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(productos, function(producto) { %>
+    <tr>
+		<td><%= htmlEncode(producto.getDisplay('name')) %></td>
+		<td><%= htmlEncode(producto.getDisplay('tipo')) %></td>
+		<td><%= htmlEncode(producto.getDisplay('esPerecedero')) %></td>
+		<td><%= htmlEncode(producto.getDisplay('precioPromedio')) %></td>
+		<td><%= htmlEncode(producto.getDisplay('tiempoPromedio')) %></td>
+		<td><%= htmlEncode(producto.getDisplay('cantidadPromedio')) %></td>
+		<td><%= htmlEncode(producto.getDisplay('minimoNivelInventario')) %></td>
+    <td>
+    <% if(showEdit) {%>
+    <a onclick="Backbone.trigger('<%= componentId %>-producto-edit',{id:<%= producto.id %>}); return false" >Editar</a> |
+	<% } %> 
+	<% if(showDelete) {%>
+    <a onclick="Backbone.trigger('<%= componentId %>-producto-delete',{id:<%= producto.id %>}); return false" >Eliminar</a> 
+	<% } %>    
+	</td>
+    </tr>
+    <% }); %>
+    </tbody>
+    </table>
+    </div>
+</script>
+
+<script type="text/template" id="producto">
+    <div class="form-group">
+    <form role="form" id="<%= componentId %>-productoForm">
+    <% if(producto.id) {%>
+    <input type="hidden" name="id" value="<%= producto.id %>"/>
+    <% }%>
+		<div class="form-group" >
+		<label for="name">Nombre</label>
+    	<input type="text" class="form-control" id="name" name="name" placeholder="" value="<%= producto.get('name') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="tipo">Tipo</label>
+    	<input type="text" class="form-control" id="tipo" name="tipo" placeholder="" value="<%= producto.get('tipo') %>"/>	
+		</div>
+		<div class="form-group" >
+	    <label>
+    	  <input id="¿Es Perecedero?" name="esPerecedero" value="true" type="checkbox" <%= producto.get('esPerecedero')?'checked':'' %>> ¿Es Perecedero?
+    	</label>
+		</div>
+		<div class="form-group" >
+		<label for="precioPromedio">Precio Promedio</label>
+    	<input type="text" class="form-control" id="precioPromedio" name="precioPromedio" placeholder="" value="<%= producto.get('precioPromedio') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="tiempoPromedio">Tiempo Promedio</label>
+    	<input type="text" class="form-control" id="tiempoPromedio" name="tiempoPromedio" placeholder="" value="<%= producto.get('tiempoPromedio') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="cantidadPromedio">Cantidad Promedio</label>
+    	<input type="text" class="form-control" id="cantidadPromedio" name="cantidadPromedio" placeholder="" value="<%= producto.get('cantidadPromedio') %>"/>	
+		</div>
+		<div class="form-group" >
+		<label for="minimoNivelInventario">M&iacute;nimo Nivel de Inventario</label>
+    	<input type="text" class="form-control" id="minimoNivelInventario" name="minimoNivelInventario" placeholder="" value="<%= producto.get('minimoNivelInventario') %>"/>	
+		</div>
+    </form>
+    </div>
+</script> 
